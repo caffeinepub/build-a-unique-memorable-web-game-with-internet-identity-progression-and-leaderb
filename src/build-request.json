@@ -1,0 +1,207 @@
+{
+  "kind": "build_request",
+  "title": "Build a unique, memorable web game with Internet Identity, progression, and leaderboards",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Define and implement a complete, playable game concept (core loop, win/lose conditions, controls, scoring, and progression) designed to be easy to learn, hard to master, and suitable for broad popularity.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app launches into a playable game experience with clear objective and controls.",
+        "A full round/session can be played from start to finish with deterministic win/lose/end conditions.",
+        "The game includes a scoring system and at least one progression mechanic (e.g., unlocks, levels, or upgrades) that affects gameplay."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add an onboarding + home flow that explains the game in under 30 seconds (short interactive tutorial or step-by-step overlay), plus a clear Start/Retry loop.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "First-time users see a concise tutorial or guided overlay and can dismiss/complete it.",
+        "Users can start a new run, pause (if applicable), and retry from a clear UI without page refresh.",
+        "All user-facing text is in English."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement Internet Identity sign-in and associate player profile data with the authenticated principal, including a public display name (editable) and basic stats (runs played, best score).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can sign in/out using Internet Identity.",
+        "Authenticated users can set/update a display name stored on the backend.",
+        "The backend persists per-user stats and returns them correctly after reload."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Create global and time-bounded leaderboards (e.g., all-time and daily/weekly) for best scores, with anti-spam validation (e.g., reject obviously invalid scores and rate-limit submissions per user).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Leaderboard screen shows at least all-time and one time-bounded board (daily or weekly).",
+        "Submitting a score updates the authenticated user’s entries and is visible on refresh.",
+        "Backend enforces basic validation (non-negative, within plausible max) and rate-limits score submissions per principal."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add a “Daily Challenge” mode that uses a consistent seed/parameters per day so all players face the same challenge, with a dedicated daily leaderboard.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Daily Challenge parameters/seed are the same for all users on the same day and change on the next day.",
+        "Daily Challenge runs submit to a separate leaderboard from standard mode.",
+        "UI clearly distinguishes Standard mode vs Daily Challenge mode."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add a lightweight social-sharing output without external integrations: generate a shareable results card view (score, mode, rank if available, and a short tagline) that users can copy as text and/or download as an image from the client.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After a run ends, a results view appears with score and mode and a short share text users can copy.",
+        "Users can download a results card image from the browser (client-side).",
+        "No third-party social APIs are required to use the sharing feature."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Create a coherent, distinctive visual theme (colors, typography, UI components, and game look) and apply it consistently across all screens; avoid a default/template look.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The UI has a consistent design system (typography scale, spacing, buttons, panels) across screens.",
+        "The game scene/board and UI share a unified theme and do not look like the unstyled starter template.",
+        "The chosen palette does not rely on a generic blue/purple gradient unless explicitly required (not required here)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Provide core screens and navigation: Home, Play (Standard), Play (Daily), Leaderboards, Profile/Stats, Settings (sound, accessibility options like reduced motion).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All listed screens exist and are reachable from the UI.",
+        "Settings include at least sound toggle and reduced motion toggle that affects animations.",
+        "Navigation is usable on both desktop and mobile viewports."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Ensure the backend actor exposes stable APIs for: getting/setting profile, submitting scores, fetching leaderboards, and fetching daily challenge parameters; store data persistently in canister state.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend provides query/update methods covering profile, score submission, leaderboard retrieval, and daily challenge retrieval.",
+        "Data persists across page reloads and canister calls within the same deployment.",
+        "All methods handle unauthenticated users appropriately (e.g., read-only access to leaderboards, restricted writes)."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add basic quality safeguards: loading/error states for all network calls, empty states for leaderboards, and a simple crash-safe fallback (if the game render fails, show an error panel and return to Home).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Make a game that will probably be famous someday"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All backend-driven views show loading and error UI states.",
+        "Leaderboards show an empty-state message when there are no entries.",
+        "If the game fails to initialize, the UI shows a recoverable error with a way to return to Home."
+      ]
+    }
+  ],
+  "constraints": [
+    "Use a single Motoko actor in backend/main.mo for all backend logic.",
+    "Do not edit files under frontend/src/components/ui; compose these components instead.",
+    "Do not edit frontend immutable hook paths (use existing hooks as-is and build features around them).",
+    "No external databases or third-party auth providers; use canister state + Internet Identity only.",
+    "No real-time multiplayer or WebSockets; design gameplay and competition to work asynchronously."
+  ],
+  "nonGoals": [
+    "Real-time PvP multiplayer gameplay.",
+    "Integrations with external social media APIs for sharing.",
+    "External analytics, email, push notifications, or third-party backend services."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Game logo mark in a bold, iconic style (game-logo.dim_512x512.png)",
+      "Wide hero/banner illustration matching the game theme (hero-banner.dim_1600x900.png)",
+      "Set of 6 minimal in-game UI icons in a consistent style (ui-icons-sprite.dim_512x512.png)"
+    ],
+    "edits": []
+  }
+}

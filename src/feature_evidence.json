@@ -1,0 +1,214 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-define-and-implement-a-complete-playable-game-concept-core-loop-win-lose-conditions-controls-scoring-and-progression-designed-to-be-easy-to-learn-hard-to-master-and-suitable-for-broad-popularity",
+      "featureTitle": "Define and implement a complete, playable game concept (core loop, win/lose conditions, controls, scoring, and progression) designed to be easy to learn, hard to master, and suitable for broad popularity.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/game/controls.ts",
+        "frontend/src/game/engine.ts",
+        "frontend/src/game/renderCanvas.ts",
+        "frontend/src/game/rng.ts",
+        "frontend/src/game/types.ts",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/pages/PlayStandardPage.tsx",
+        "frontend/src/state/progressionStore.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-onboarding-home-flow-that-explains-the-game-in-under-30-seconds-short-interactive-tutorial-or-step-by-step-overlay-plus-a-clear-start-retry-loop",
+      "featureTitle": "Add an onboarding + home flow that explains the game in under 30 seconds (short interactive tutorial or step-by-step overlay), plus a clear Start/Retry loop.",
+      "files": [
+        "frontend/src/components/TutorialOverlay.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/pages/PlayStandardPage.tsx",
+        "frontend/src/state/onboardingStore.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-associate-player-profile-data-with-the-authenticated-principal-including-a-public-display-name-editable-and-basic-stats-runs-played-best-score",
+      "featureTitle": "Implement Internet Identity sign-in and associate player profile data with the authenticated principal, including a public display name (editable) and basic stats (runs played, best score).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AuthButton.tsx",
+        "frontend/src/components/ProfileSetupDialog.tsx",
+        "frontend/src/pages/ProfilePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-global-and-time-bounded-leaderboards-e-g-all-time-and-daily-weekly-for-best-scores-with-anti-spam-validation-e-g-reject-obviously-invalid-scores-and-rate-limit-submissions-per-user",
+      "featureTitle": "Create global and time-bounded leaderboards (e.g., all-time and daily/weekly) for best scores, with anti-spam validation (e.g., reject obviously invalid scores and rate-limit submissions per user).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LeaderboardTable.tsx",
+        "frontend/src/pages/LeaderboardsPage.tsx",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/pages/PlayStandardPage.tsx",
+        "frontend/src/pages/ResultsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-daily-challenge-mode-that-uses-a-consistent-seed-parameters-per-day-so-all-players-face-the-same-challenge-with-a-dedicated-daily-leaderboard",
+      "featureTitle": "Add a “Daily Challenge” mode that uses a consistent seed/parameters per day so all players face the same challenge, with a dedicated daily leaderboard.",
+      "files": [
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/LeaderboardsPage.tsx",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/utils/dateKey.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-lightweight-social-sharing-output-without-external-integrations-generate-a-shareable-results-card-view-score-mode-rank-if-available-and-a-short-tagline-that-users-can-copy-as-text-and-or-download-as-an-image-from-the-client",
+      "featureTitle": "Add a lightweight social-sharing output without external integrations: generate a shareable results card view (score, mode, rank if available, and a short tagline) that users can copy as text and/or download as an image from the client.",
+      "files": [
+        "frontend/src/components/ResultsShareCard.tsx",
+        "frontend/src/pages/ResultsPage.tsx",
+        "frontend/src/utils/renderCardToImage.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-coherent-distinctive-visual-theme-colors-typography-ui-components-and-game-look-and-apply-it-consistently-across-all-screens-avoid-a-default-template-look",
+      "featureTitle": "Create a coherent, distinctive visual theme (colors, typography, UI components, and game look) and apply it consistently across all screens; avoid a default/template look.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/game/renderCanvas.ts",
+        "frontend/src/index.css",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-core-screens-and-navigation-home-play-standard-play-daily-leaderboards-profile-stats-settings-sound-accessibility-options-like-reduced-motion",
+      "featureTitle": "Provide core screens and navigation: Home, Play (Standard), Play (Daily), Leaderboards, Profile/Stats, Settings (sound, accessibility options like reduced motion).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/pages/PlayStandardPage.tsx",
+        "frontend/src/pages/SettingsPage.tsx",
+        "frontend/src/state/settingsStore.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-quality-safeguards-loading-error-states-for-all-network-calls-empty-states-for-leaderboards-and-a-simple-crash-safe-fallback-if-the-game-render-fails-show-an-error-panel-and-return-to-home",
+      "featureTitle": "Add basic quality safeguards: loading/error states for all network calls, empty states for leaderboards, and a simple crash-safe fallback (if the game render fails, show an error panel and return to Home).",
+      "files": [
+        "frontend/src/components/AsyncState.tsx",
+        "frontend/src/pages/LeaderboardsPage.tsx",
+        "frontend/src/pages/PlayDailyPage.tsx",
+        "frontend/src/pages/PlayStandardPage.tsx",
+        "frontend/src/pages/ProfilePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

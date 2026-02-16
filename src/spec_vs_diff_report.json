@@ -1,0 +1,100 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-16T01:04:09.281Z",
+  "summary": "The diff adds a full frontend app shell (routing, layout, onboarding/tutorial overlay, share card, game engine scaffolding, and React Query hooks) plus a Motoko backend with profiles and rate-limited score submission. However, evidence for time-bounded/daily leaderboards, daily-challenge leaderboard separation, and an implemented gameplay-affecting progression mechanic is not present in the provided diff summary (some files are truncated/omitted). The diff also introduces access-control/admin-token mechanics not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Include at least one progression mechanic (e.g., unlocks, levels, or upgrades) that affects gameplay.",
+      "reason": "Game engine/config types exist, but the diff summary does not show any implemented progression system that changes gameplay during/after runs (only a type definition for ProgressionState is visible).",
+      "evidence": [
+        "frontend/src/game/types.ts",
+        "frontend/src/game/engine.ts (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Create global and time-bounded leaderboards (e.g., all-time and daily/weekly) for best scores.",
+      "reason": "Only an all-scores query hook is shown (getAllHighScores). There is no evidence of API/hooks/UI for a daily/weekly (time-bounded) leaderboard retrieval.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/components/LeaderboardTable.ts"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Backend enforces basic validation (non-negative, within plausible max) and rate-limits score submissions per principal.",
+      "reason": "Rate limiting is clearly implemented, but the diff snippet does not show any validation for a plausible maximum score (and the submitScore implementation is truncated before any additional checks).",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Daily Challenge runs submit to a separate leaderboard from standard mode, with a dedicated daily leaderboard.",
+      "reason": "Frontend shows daily challenge seed retrieval/start hooks, but there is no evidence of separate daily leaderboard APIs/hooks/UI; only a single 'highScores' query is shown.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Admin/access-control initialization via a secret URL parameter (caffeineAdminToken) and backend authorization mixins/permissions gating.",
+      "reason": "The BuildRequest specifies Internet Identity only and no third-party auth; it does not request an admin token mechanism, URL-based secret parameters, or an access-control framework that can trap profile access based on permissions.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "description": "Caffeine.ai referral/footer link with UTM parameters.",
+      "reason": "Not requested by any requirement; adds branding/referral behavior unrelated to the game, auth, progression, or leaderboards requirements.",
+      "evidence": [
+        "frontend/src/components/AppLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppLayout.tsx",
+    "frontend/src/components/AsyncState.tsx",
+    "frontend/src/components/AuthButton.tsx",
+    "frontend/src/components/LeaderboardTable.tsx",
+    "frontend/src/components/ProfileSetupDialog.tsx",
+    "frontend/src/components/ResultsShareCard.tsx",
+    "frontend/src/components/TutorialOverlay.tsx",
+    "frontend/src/game/controls.ts",
+    "frontend/src/game/engine.ts",
+    "frontend/src/game/renderCanvas.ts",
+    "frontend/src/game/rng.ts",
+    "frontend/src/game/types.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/LeaderboardsPage.tsx",
+    "frontend/src/pages/PlayDailyPage.tsx",
+    "frontend/src/pages/PlayStandardPage.tsx",
+    "frontend/src/pages/ProfilePage.tsx",
+    "frontend/src/pages/ResultsPage.tsx",
+    "frontend/src/pages/SettingsPage.tsx",
+    "frontend/src/state/onboardingStore.ts",
+    "frontend/src/state/progressionStore.ts",
+    "frontend/src/state/settingsStore.ts",
+    "frontend/src/utils/dateKey.ts",
+    "frontend/src/utils/renderCardToImage.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

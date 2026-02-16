@@ -1,0 +1,376 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Seeded 2D web arcade game with Internet Identity, progression, daily challenge, and leaderboards",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement a complete, replayable 2D game with clear controls, scoring, deterministic end conditions, and progression that affects gameplay.",
+      "acceptanceCriteria": [
+        "The app launches into a playable game experience with clear objective and controls.",
+        "A full round/session can be played from start to finish with deterministic win/lose/end conditions.",
+        "The game includes a scoring system and at least one progression mechanic (e.g., unlocks, levels, or upgrades) that affects gameplay."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/types.ts",
+          "operation": "create",
+          "description": "Define core 2D game types (mode, run state, inputs, scoring, progression/upgrades) to keep gameplay logic consistent across screens."
+        },
+        {
+          "path": "frontend/src/game/rng.ts",
+          "operation": "create",
+          "description": "Implement a seeded pseudo-random generator so Standard and Daily runs can be deterministic when provided the same seed."
+        },
+        {
+          "path": "frontend/src/game/engine.ts",
+          "operation": "create",
+          "description": "Create the core game loop (tick/update), win/lose/end rules, scoring, and progression effects (e.g., unlockable modifiers) for a complete session."
+        },
+        {
+          "path": "frontend/src/game/renderCanvas.ts",
+          "operation": "create",
+          "description": "Render the 2D game to a canvas with a cohesive look and minimal dependencies; expose a safe init API that can throw/return errors for crash-safe fallback."
+        },
+        {
+          "path": "frontend/src/game/controls.ts",
+          "operation": "create",
+          "description": "Implement keyboard + pointer/touch controls and a consistent input mapping usable on desktop and mobile."
+        },
+        {
+          "path": "frontend/src/state/progressionStore.ts",
+          "operation": "create",
+          "description": "Persist lightweight progression locally (e.g., unlocked upgrades, best local streak) and expose functions to apply progression to gameplay."
+        },
+        {
+          "path": "frontend/src/pages/PlayStandardPage.tsx",
+          "operation": "create",
+          "description": "Create the Standard play screen that hosts the canvas, HUD, pause/retry controls, and integrates scoring + progression from the game engine."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "create",
+          "description": "Create the Daily play screen that uses the daily seed and clearly distinguishes Daily mode gameplay and UI from Standard."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Wire new Play screens into the application shell, routing, and navigation so gameplay is reachable and sessions can be started end-to-end."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add onboarding/tutorial overlay and a tight Start/Retry loop for first-time and returning users.",
+      "acceptanceCriteria": [
+        "First-time users see a concise tutorial or guided overlay and can dismiss/complete it.",
+        "Users can start a new run, pause (if applicable), and retry from a clear UI without page refresh.",
+        "All user-facing text is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/state/onboardingStore.ts",
+          "operation": "create",
+          "description": "Add local persistence for whether the tutorial has been completed/dismissed to ensure first-time users see onboarding only when appropriate."
+        },
+        {
+          "path": "frontend/src/components/TutorialOverlay.tsx",
+          "operation": "create",
+          "description": "Implement a short step-by-step overlay/tutorial for controls and objective. Use shadcn-ui dialog/overlay primitives via composition (do not edit frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create a Home flow with a <30s explanation, clear Start buttons for Standard/Daily, and a way to replay the tutorial. Use shadcn-ui components (buttons/cards) via composition. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/PlayStandardPage.tsx",
+          "operation": "modify",
+          "description": "Add in-run pause and retry controls and a post-run action to start a new run without refresh; ensure all labels and tutorial text are in English."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "modify",
+          "description": "Add in-run pause and retry controls for Daily mode and ensure a clear loop back to restarting the daily run without refresh."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add Internet Identity sign-in/out and a profile flow with editable public display name and basic stats display.",
+      "acceptanceCriteria": [
+        "Users can sign in/out using Internet Identity.",
+        "Authenticated users can set/update a display name stored on the backend.",
+        "The backend persists per-user stats and returns them correctly after reload."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AuthButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using the existing useInternetIdentity hook; clear cached data on logout with react-query client. Verify the component's usage instructions before implementing (authorization component)."
+        },
+        {
+          "path": "frontend/src/hooks/usePlayerProfile.ts",
+          "operation": "create",
+          "description": "Add react-query hooks for getCallerUserProfile/saveCallerUserProfile/getUserProfile using useActor and the backend interface, with correct loading/isFetched semantics to prevent profile-setup modal flash."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Implement first-login profile setup (display name) as a modal dialog composed from shadcn-ui components; show only when authenticated and profile is null. Verify the component's usage instructions before implementing (authorization + shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "create",
+          "description": "Create a Profile/Stats screen that shows display name (editable) and backend stats (runs played, best score) with loading/error states. Verify the component's usage instructions before implementing (authorization + shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire AuthButton into global navigation, mount ProfileSetupDialog at app level, and ensure profile/stats screens are reachable while handling unauthenticated users gracefully."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement leaderboards UI for all-time and time-bounded views with submission wiring and robust states.",
+      "acceptanceCriteria": [
+        "Leaderboard screen shows at least all-time and one time-bounded board (daily or weekly).",
+        "Submitting a score updates the authenticated user’s entries and is visible on refresh.",
+        "Backend enforces basic validation (non-negative, within plausible max) and rate-limits score submissions per principal."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useLeaderboards.ts",
+          "operation": "create",
+          "description": "Add react-query hooks to fetch high scores and derive time-bounded boards (e.g., last 24h / last 7d) from returned timestamps; expose refetch helpers after submission."
+        },
+        {
+          "path": "frontend/src/hooks/useSubmitScore.ts",
+          "operation": "create",
+          "description": "Add a mutation hook to submitScore with UI-friendly error parsing (including authorization traps) and invalidation of leaderboard/profile queries on success."
+        },
+        {
+          "path": "frontend/src/components/LeaderboardTable.tsx",
+          "operation": "create",
+          "description": "Create a leaderboard table component with empty/loading/error states using composed shadcn-ui table/card/tabs components (do not edit frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LeaderboardsPage.tsx",
+          "operation": "create",
+          "description": "Implement the Leaderboards screen with at least All-time and Daily/Weekly views, and clearly separated sections for Standard vs Daily Challenge boards where applicable. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/ResultsPage.tsx",
+          "operation": "create",
+          "description": "Create a post-run results screen that triggers score submission for authenticated users and shows status (submitting/success/failure) and a link to leaderboards."
+        },
+        {
+          "path": "frontend/src/pages/PlayStandardPage.tsx",
+          "operation": "modify",
+          "description": "On run end, navigate to Results with final score/mode; for authenticated users, call submitScore via the mutation hook and handle backend rejections as user-facing errors."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "modify",
+          "description": "On run end, navigate to Results with final score/mode; for authenticated users, call submitScore with the correct mode/difficulty mapping and handle backend rejections as user-facing errors."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register and wire the Leaderboards and Results routes into navigation so users can view boards and see their submission reflected after refresh."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add a Daily Challenge mode with a consistent per-day seed and a dedicated daily challenge leaderboard view.",
+      "acceptanceCriteria": [
+        "Daily Challenge parameters/seed are the same for all users on the same day and change on the next day.",
+        "Daily Challenge runs submit to a separate leaderboard from standard mode.",
+        "UI clearly distinguishes Standard mode vs Daily Challenge mode."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/dateKey.ts",
+          "operation": "create",
+          "description": "Add a utility to compute a stable day key (e.g., YYYY-MM-DD in UTC) used to request the daily seed and label daily leaderboards."
+        },
+        {
+          "path": "frontend/src/hooks/useDailyChallenge.ts",
+          "operation": "create",
+          "description": "Implement a hook that fetches the daily seed for the current day and, if missing, initializes it (via the available backend capability) before starting a run."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "modify",
+          "description": "Use the daily seed to initialize the game RNG and parameters; add prominent UI labeling (Daily Challenge) and show the day key/seed-derived identity only if non-spoiling."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Add clear mode selection (Standard vs Daily Challenge) and describe how Daily works (same challenge per day) in concise English."
+        },
+        {
+          "path": "frontend/src/pages/LeaderboardsPage.tsx",
+          "operation": "modify",
+          "description": "Add a dedicated Daily Challenge leaderboard section/tab derived from available score data (e.g., segregated by mode/difficulty and/or time window) and label it clearly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add a shareable results card view with copyable text and downloadable image generated client-side.",
+      "acceptanceCriteria": [
+        "After a run ends, a results view appears with score and mode and a short share text users can copy.",
+        "Users can download a results card image from the browser (client-side).",
+        "No third-party social APIs are required to use the sharing feature."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ResultsShareCard.tsx",
+          "operation": "create",
+          "description": "Create a share card component that renders score/mode/tagline (and rank if available from fetched leaderboard context) and supports copy-to-clipboard text generation. Use composed shadcn-ui buttons/cards. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/utils/renderCardToImage.ts",
+          "operation": "create",
+          "description": "Implement client-side image export (e.g., canvas-based rendering or DOM-to-canvas approach without external social APIs) to download a results card image."
+        },
+        {
+          "path": "frontend/src/pages/ResultsPage.tsx",
+          "operation": "modify",
+          "description": "Integrate ResultsShareCard after run end; wire 'Copy text' and 'Download image' actions and ensure displayed content includes score and mode in English."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Apply a distinctive visual theme (palette, typography, UI system, and game look) consistently across all screens.",
+      "acceptanceCriteria": [
+        "The UI has a consistent design system (typography scale, spacing, buttons, panels) across screens.",
+        "The game scene/board and UI share a unified theme and do not look like the unstyled starter template.",
+        "The chosen palette does not rely on a generic blue/purple gradient unless explicitly required (not required here)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Define global theme tokens (CSS variables used by Tailwind/shadcn), typography defaults, and app background styling to ensure a cohesive non-template look."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with game-specific semantic colors and subtle shadow/radius choices that match the intended aesthetic across UI and in-game visuals."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a reusable layout (header/nav/content) with consistent spacing and styled containers using composed shadcn-ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/renderCanvas.ts",
+          "operation": "modify",
+          "description": "Align the game’s 2D rendering palette/typography/shape language with the global theme to unify the game scene and UI."
+        },
+        {
+          "path": "frontend/public/assets/generated/game-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset at frontend/public/assets/generated/game-logo.dim_512x512.png and ensure it is referenced by UI where appropriate (no backend storage)."
+        },
+        {
+          "path": "frontend/public/assets/generated/hero-banner.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated hero/banner asset at frontend/public/assets/generated/hero-banner.dim_1600x900.png and ensure it is referenced by UI where appropriate (no backend storage)."
+        },
+        {
+          "path": "frontend/public/assets/generated/ui-icons-sprite.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated UI icon sprite at frontend/public/assets/generated/ui-icons-sprite.dim_512x512.png and ensure it is referenced by UI where appropriate (no backend storage)."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Incorporate frontend/public/assets/generated/game-logo.dim_512x512.png and frontend/public/assets/generated/hero-banner.dim_1600x900.png into the Home screen layout for distinctive branding."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Provide core screens and navigation: Home, Play (Standard), Play (Daily), Leaderboards, Profile/Stats, Settings (sound, reduced motion).",
+      "acceptanceCriteria": [
+        "All listed screens exist and are reachable from the UI.",
+        "Settings include at least sound toggle and reduced motion toggle that affects animations.",
+        "Navigation is usable on both desktop and mobile viewports."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "create",
+          "description": "Create Settings screen with sound toggle and reduced motion toggle; use composed shadcn-ui switches/buttons/cards (do not edit frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/state/settingsStore.ts",
+          "operation": "create",
+          "description": "Persist settings (sound, reduced motion) locally and expose a small API for game/UI layers to consume."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing and navigation links for Home, Play (Standard), Play (Daily), Leaderboards, Profile/Stats, and Settings; wrap pages in AppLayout for consistent navigation on desktop/mobile."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Implement responsive navigation (compact mobile layout) and ensure all primary screens are reachable without relying on page refresh."
+        },
+        {
+          "path": "frontend/src/pages/PlayStandardPage.tsx",
+          "operation": "modify",
+          "description": "Read settings (sound/reduced motion) and apply them to gameplay feedback (audio/animation intensity) and UI motion."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "modify",
+          "description": "Read settings (sound/reduced motion) and apply them consistently in Daily mode."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add loading/error/empty states for networked views and a crash-safe fallback for game initialization failures.",
+      "acceptanceCriteria": [
+        "All backend-driven views show loading and error UI states.",
+        "Leaderboards show an empty-state message when there are no entries.",
+        "If the game fails to initialize, the UI shows a recoverable error with a way to return to Home."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AsyncState.tsx",
+          "operation": "create",
+          "description": "Create reusable UI helpers for loading/error/empty states composed from shadcn-ui components (do not edit frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LeaderboardsPage.tsx",
+          "operation": "modify",
+          "description": "Use AsyncState to show loading/error and an empty-state message when there are no leaderboard entries."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Use AsyncState to show loading/error UI for profile fetch/save actions and keep the screen recoverable."
+        },
+        {
+          "path": "frontend/src/pages/PlayStandardPage.tsx",
+          "operation": "modify",
+          "description": "Add crash-safe game init: if canvas/game engine initialization fails, show a recoverable error panel with a button to return to Home (no refresh)."
+        },
+        {
+          "path": "frontend/src/pages/PlayDailyPage.tsx",
+          "operation": "modify",
+          "description": "Add crash-safe game init: if canvas/game engine initialization fails, show a recoverable error panel with a button to return to Home (no refresh)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Create a unique, memorable game concept intended to have strong potential for broad popularity/fame.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Game logo mark in a bold, iconic style (game-logo.dim_512x512.png)\n- Wide hero/banner illustration matching the game theme (hero-banner.dim_1600x900.png)\n- Set of 6 minimal in-game UI icons in a consistent style (ui-icons-sprite.dim_512x512.png)",
+  "existing_features": [
+    {
+      "id": "feature-define-and-implement-a-complete-playable-game-concept-core-loop-win-lose-conditions-controls-scoring-and-progression-designed-to-be-easy-to-learn-hard-to-master-and-suitable-for-broad-popularity",
+      "title": "Define and implement a complete, playable game concept (core loop, win/lose conditions, controls, scoring, and progression) designed to be easy to learn, hard to master, and suitable for broad popularity.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-onboarding-home-flow-that-explains-the-game-in-under-30-seconds-short-interactive-tutorial-or-step-by-step-overlay-plus-a-clear-start-retry-loop",
+      "title": "Add an onboarding + home flow that explains the game in under 30 seconds (short interactive tutorial or step-by-step overlay), plus a clear Start/Retry loop.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-associate-player-profile-data-with-the-authenticated-principal-including-a-public-display-name-editable-and-basic-stats-runs-played-best-score",
+      "title": "Implement Internet Identity sign-in and associate player profile data with the authenticated principal, including a public display name (editable) and basic stats (runs played, best score).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-global-and-time-bounded-leaderboards-e-g-all-time-and-daily-weekly-for-best-scores-with-anti-spam-validation-e-g-reject-obviously-invalid-scores-and-rate-limit-submissions-per-user",
+      "title": "Create global and time-bounded leaderboards (e.g., all-time and daily/weekly) for best scores, with anti-spam validation (e.g., reject obviously invalid scores and rate-limit submissions per user).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-daily-challenge-mode-that-uses-a-consistent-seed-parameters-per-day-so-all-players-face-the-same-challenge-with-a-dedicated-daily-leaderboard",
+      "title": "Add a “Daily Challenge” mode that uses a consistent seed/parameters per day so all players face the same challenge, with a dedicated daily leaderboard.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-lightweight-social-sharing-output-without-external-integrations-generate-a-shareable-results-card-view-score-mode-rank-if-available-and-a-short-tagline-that-users-can-copy-as-text-and-or-download-as-an-image-from-the-client",
+      "title": "Add a lightweight social-sharing output without external integrations: generate a shareable results card view (score, mode, rank if available, and a short tagline) that users can copy as text and/or download as an image from the client.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-distinctive-visual-theme-colors-typography-ui-components-and-game-look-and-apply-it-consistently-across-all-screens-avoid-a-default-template-look",
+      "title": "Create a coherent, distinctive visual theme (colors, typography, UI components, and game look) and apply it consistently across all screens; avoid a default/template look.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-core-screens-and-navigation-home-play-standard-play-daily-leaderboards-profile-stats-settings-sound-accessibility-options-like-reduced-motion",
+      "title": "Provide core screens and navigation: Home, Play (Standard), Play (Daily), Leaderboards, Profile/Stats, Settings (sound, accessibility options like reduced motion).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-quality-safeguards-loading-error-states-for-all-network-calls-empty-states-for-leaderboards-and-a-simple-crash-safe-fallback-if-the-game-render-fails-show-an-error-panel-and-return-to-home",
+      "title": "Add basic quality safeguards: loading/error states for all network calls, empty states for leaderboards, and a simple crash-safe fallback (if the game render fails, show an error panel and return to Home).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Design a game concept (core idea, hook, and high-level plan) aimed at broad popularity/fame potential.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Ensure the backend actor exposes stable APIs for: getting/setting profile, submitting scores, fetching leaderboards, and fetching daily challenge parameters; store data persistently in canister state.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Build a unique, memorable web game with Internet Identity, progression, and leaderboards",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
